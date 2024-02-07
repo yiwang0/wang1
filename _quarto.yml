@@ -1,0 +1,59 @@
+project:
+  type: website
+  output-dir: docs
+  resources: 
+    - path/to/file.pdf
+  
+website:
+  title: "Yi Wang :)"
+  page-footer: 
+    background: light
+    left: 
+      - "Copyright 2024, Yi Wang"
+    right: 
+      - icon: linkedin
+        href: Linkedin Profile
+      - icon: github
+        href: https://yiwang0.github.io/wang1/
+      - icon: envelope
+        href: mailto:Stefanie@utdallas.edu
+  navbar:
+    search: true
+    tools:
+      - icon: linkedin
+        href: Linkedin Profile
+      - icon: github
+        href: https://yiwang0.github.io/wang1/
+      - icon: envelope
+        href: mailto:Stefanie@utdallas.edu
+    left: 
+      - href: index.qmd
+        text: Home
+      - href: about.qmd
+        text: About
+      - href: research.qmd
+        text: Research
+      - href: project.qmd
+        text: Project
+      - href: resume.qmd
+        text: Résumé
+      - text: "Assignments"
+        menu:  
+          - href: assignment1.qmd
+            text: Assignment 1
+          - href: assignment2.qmd
+            text: Assignment 2
+          - href: assignment3.qmd
+            text: Assignment 3
+
+format:
+  html:
+    theme: 
+      light: cosmo
+      dark: cosmo
+    css: styles.css
+    toc: true
+    page-layout: full
+
+editor: visual
+
