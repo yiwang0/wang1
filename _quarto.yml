@@ -41,10 +41,12 @@ website:
         menu:  
           - href: assignment1.qmd
             text: Assignment 1
+          - href: assignment2.qmd
+            text: Assignment 2
           - href: Lab01.qmd
-            text: Lab 1 (Assignment 2)
+            text: Lab 1 
           - href: Lab02.qmd
-            text: Lab 2 (Assignment 2)
+            text: Lab 2 
           - href: assignment3.qmd
             text: Assignment 3
 
