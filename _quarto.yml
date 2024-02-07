@@ -45,8 +45,6 @@ website:
             text: Assignment 2
           - href: assignment2.html
             text: Assignment HTML 
-          - href: assignment2.rmd
-            text: Assignment HTML 
           - href: Lab01.qmd
             text: Lab 1 
           - href: Lab02.qmd
