@@ -1,6 +1,6 @@
 ---
 title: "EPPS 6323: Lab01 R programming basics I"
-author: "My name"
+author: "Wang (from Dr. Ho)"
 format: html
 editor: visual
 ---
