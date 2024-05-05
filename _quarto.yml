@@ -55,6 +55,8 @@ website:
             text: Assignment 3
           - href: assignment4.qmd
             text: Assignment 4
+          - href: assignment8.qmd
+            text: Assignment 8
             
           
 
