@@ -55,11 +55,15 @@ website:
             text: Assignment 3
           - href: assignment4.qmd
             text: Assignment 4
+          - href: assignment5.qmd
+            text: Assignment 5
+          - href: assignment6.qmd
+            text: Assignment 6
+          - href: assignment7.qmd
+            text: Assignment 7
           - href: assignment8.qmd
             text: Assignment 8
             
-          
-
 format:
   html:
     theme: 

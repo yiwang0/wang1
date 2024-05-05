@@ -1,27 +1,311 @@
 ---
-title: "assignment5"
-author: "Stefanie Wang"
-format: html
-editor: visual
+title: "Assignment 5 (Lab 4) - Unsupervised learning"
+author: "Yi Wang"
+output: 
+  html_document: 
+    toc: yes
+    toc_float: yes
+    highlight: default
+    theme: libera
+    number_sections: yes
+date: last-modified 
+title-block-banner: true
 ---
 
-## Quarto
+# Unsupervised Learning
 
-Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
+Unsupervised learning involves algorithms that detect patterns or grouping structures in data without relying on labeled information like dependent variables. Instead, it explores the inherent structure and possible groupings of unlabeled data, often used as a pre-processing step for supervised learning.
 
-## Running Code
+In unsupervised learning, there's no explicit dependent variable for prediction (Y). The focus is on revealing patterns within measurements (X1, X2, ..., Xp) and identifying any underlying subgroups among observations.
 
-When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
+This section introduces two main methods:
 
-```{r}
-1 + 1
+## Principal Component Analysis (PCA)
+
+
+Principal Components Analysis (PCA) generates a correlated, low-dimensional representation of a dataset by identifying linear combinations of variables with maximal variance and mutually uncorrelated.
+
+The first principal component of a set of features $(X_1, X_2, . . . , X_p)$ is the normalized linear combination of the features: <br> $$  Z_1 = \phi_{11}X_1 +\phi_{21}X_2 +...+\phi_{p1}X_p $$ <br>,
+
+which has the largest variance.
+
+"Normalized" means that: $\sum_{j=1}^p\phi_{j1}^2 = 1$.
+
+The elements $(\phi_{11}, . . . , \phi_{p1})$ is the loading of the first principal component.
+
+The loadings, collectively, make up the principal compobebt loading "vector" = $\phi_1= (\phi_{11} \phi_{21} ... \phi_{p1})^T$
+
+We constrain the loadings to set the sum of squares = 1. Otherwise, setting these elements to be arbitrarily large in absolute value might result in an arbitrarily large variance.
+
+## Clustering
+
+### K-Means Clustering
+
+K-Means Clustering is a method used to divide data points into K groups while minimizing the sum of squares from each point to its assigned cluster center within each group.
+
+### Hierarchical Clustering
+
+Hierarchical clustering offers an alternative approach that doesn't require a pre-determined or pre-specified or a particular value/choice  of $(K)$.
+
+One advantage of Hierarchical Clustering is its ability to generate a dendrogram - a tree-based depiction of observations.
+
+The dendrogram is constructed by merging clusters from the leaves to the trunk. It provides a visual representation of data relationships, allowing for subgroup identification by cutting the dendrogram at desired similarity levels.
+
+# Practice Workshop: Principal Component Analysis and Clustering Methods
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+require(easypackages)
+packages("datasets","ISLR","factoextra","tidyverse","RColorBrewer","animation")
+libraries("datasets","ISLR","factoextra","tidyverse","RColorBrewer","animation")
 ```
 
-You can add options to executable code like this
+**1. Principal Component Analysis (PCA)**
 
-```{r}
-#| echo: false
-2 * 2
+```{r message=FALSE, warning=FALSE}
+## Gentle Machine Learning
+## Principal Component Analysis
+
+
+# Dataset: USArrests is the sample dataset used in 
+# McNeil, D. R. (1977) Interactive Data Analysis. New York: Wiley.
+# Murder	numeric	Murder arrests (per 100,000)
+# Assault	numeric	Assault arrests (per 100,000)
+# UrbanPop	numeric	Percent urban population
+# Rape	numeric	Rape arrests (per 100,000)
+# For each of the fifty states in the United States, the dataset contains the number 
+# of arrests per 100,000 residents for each of three crimes: Assault, Murder, and Rape. 
+# UrbanPop is the percent of the population in each state living in urban areas.
+library(datasets)
+library(ISLR)
+arrest = USArrests
+states=row.names(USArrests)
+names(USArrests)
+
+# Get means and variances of variables
+apply(USArrests, 2, mean)
+apply(USArrests, 2, var)
+
+# PCA with scaling
+pr.out=prcomp(USArrests, scale=TRUE)
+names(pr.out) # Five
+pr.out$center # the centering and scaling used (means)
+pr.out$scale # the matrix of variable loadings (eigenvectors)
+pr.out$rotation
+dim(pr.out$x)
+pr.out$rotation=-pr.out$rotation
+pr.out$x=-pr.out$x
+biplot(pr.out, scale=0)
+
+pr.out$sdev
+pr.var=pr.out$sdev^2
+pr.var
+pve=pr.var/sum(pr.var)
+pve
+plot(pve, xlab="Principal Component", ylab="Proportion of Variance Explained", ylim=c(0,1),type='b')
+plot(cumsum(pve), xlab="Principal Component", ylab="Cumulative Proportion of Variance Explained", ylim=c(0,1),type='b')
+
+## Use factoextra package
+library(factoextra)
+fviz(pr.out, "ind", geom = "auto", mean.point = TRUE, font.family = "Georgia")
+fviz_pca_biplot(pr.out, font.family = "Georgia", col.var="pink")
 ```
 
-The `echo: false` option disables the printing of code (only output is displayed).
+**2. K-Means Clustering**
+
+```{r message=FALSE, warning=FALSE}
+## Computer purchase example: Animated illustration 
+## Adapted from Guru99 tutorial (https://www.guru99.com/r-k-means-clustering.html)
+## Dataset: characteristics of computers purchased.
+## Variables used: RAM size, Harddrive size
+
+library(dplyr)
+library(ggplot2)
+library(RColorBrewer)
+
+computers = read.csv("https://raw.githubusercontent.com/guru99-edu/R-Programming/master/computers.csv") 
+
+# Only retain two variables for illustration
+rescaled_comp <- computers[4:5] %>%
+  mutate(hd_scal = scale(hd),
+         ram_scal = scale(ram)) %>%
+  select(c(hd_scal, ram_scal))
+        
+ggplot(data = rescaled_comp, aes(x = hd_scal, y = ram_scal)) +
+  geom_point(pch=20, col = "green") + theme_bw() +
+  labs(x = "Hard drive size (Scaled)", y ="RAM size (Scaled)" ) +
+  theme(text = element_text(family="Georgia")) 
+
+# install.packages("animation")
+library(animation)
+set.seed(2345)
+library(animation)
+
+# Animate the K-mean clustering process, cluster no. = 4
+kmeans.ani(rescaled_comp[1:2], centers = 4, pch = 15:18, col = 1:4) 
+```
+
+```{r message=FALSE}
+
+saveGIF(
+  kmeans.ani(rescaled_comp[1:2], centers = 4, pch = 15:18, col = 1:4) ,
+  movie.name = "kmeans_animated.gif",
+  img.name = "kmeans",
+  convert = "magick",
+  cmd.fun,
+  clean = TRUE,
+  extra.opts = ""
+)
+```
+
+![animated K-means output](https://datageneration.io/Gentlemachinelearning/images/kmeans_animated.gif){width="700" height="500"}
+
+```{r message=FALSE, warning=FALSE}
+## Iris example
+
+# Without grouping by species
+ggplot(iris, aes(Petal.Length, Petal.Width)) + geom_point() + 
+  theme_bw() +
+  scale_color_manual(values=c("green","magenta","cyan"))
+
+# With grouping by species
+ggplot(iris, aes(Petal.Length, Petal.Width, color = Species)) + geom_point() + 
+  theme_bw() +
+  scale_color_manual(values=c("green","pink","cyan"))
+
+# Check k-means clusters
+## Starting with three clusters and 20 initial configurations
+set.seed(20)
+irisCluster <- kmeans(iris[, 3:4], 3, nstart = 20)
+irisCluster
+class(irisCluster$cluster)
+# Confusion matrix
+table(irisCluster$cluster, iris$Species)
+irisCluster$cluster <- as.factor(irisCluster$cluster)
+ggplot(iris, aes(Petal.Length, Petal.Width, color = irisCluster$cluster)) + geom_point() +
+  scale_color_manual(values=c("lightgreen","orange","cyan")) +
+  theme_bw()
+actual = ggplot(iris, aes(Petal.Length, Petal.Width, color = Species)) + geom_point() + 
+  theme_bw() +
+  scale_color_manual(values=c("green","orange","cyan")) +
+  theme(legend.position="bottom") +
+  theme(text = element_text(family="Georgia")) 
+kmc = ggplot(iris, aes(Petal.Length, Petal.Width, color = irisCluster$cluster)) + geom_point() +
+  theme_bw() +
+  scale_color_manual(values=c("firebrick1", "steelblue", "forestgreen")) +
+  theme(legend.position="bottom") +
+  theme(text = element_text(family="Georgia")) 
+library(grid)
+library(gridExtra)
+grid.arrange(arrangeGrob(actual, kmc, ncol=2, widths=c(1,1)), nrow=1)
+```
+
+```{r message=FALSE, warning=FALSE}
+## Wine example
+
+# The wine dataset contains the results of a chemical analysis of wines 
+# grown in a specific area of Italy. Three types of wine are represented in the 178 samples, with the results of 13 chemical analyses recorded for each sample. 
+# Variables used in this example: Alcohol, Malic: Malic acid, Ash
+# Source: http://archive.ics.uci.edu/ml/datasets/Wine
+
+# Import wine dataset
+library(readr)
+wine <- read_csv("https://raw.githubusercontent.com/datageneration/gentlemachinelearning/master/data/wine.csv")
+
+
+## Choose and scale variables
+wine_subset <- scale(wine[ , c(2:4)])
+
+## Create cluster using k-means, k = 3, with 25 initial configurations
+wine_cluster <- kmeans(wine_subset, centers = 3,
+                       iter.max = 10,
+                       nstart = 25)
+wine_cluster
+
+# Create a function to compute and plot total within-cluster sum of square (within-ness)
+wssplot <- function(data, nc=15, seed=1234){
+  wss <- (nrow(data)-1)*sum(apply(data,2,var))
+  for (i in 2:nc){
+    set.seed(seed)
+    wss[i] <- sum(kmeans(data, centers=i)$withinss)}
+  plot(1:nc, wss, type="b", xlab="Number of Clusters",
+       ylab="Within groups sum of squares")
+}
+
+# plotting values for each cluster starting from 1 to 9
+wssplot(wine_subset, nc = 9)
+
+# Plot results by dimensions
+wine_cluster$cluster = as.factor(wine_cluster$cluster)
+pairs(wine[2:4],
+      col = c("orange", "lightblue", "lightgreen")[wine_cluster$cluster],
+      pch = c(15:17)[wine_cluster$cluster],
+      main = "K-Means Clusters: Wine data")
+table(wine_cluster$cluster)
+
+## Use the factoextra package for more analysis
+# install.packages("factoextra")
+
+library(factoextra)
+fviz_nbclust(wine_subset, kmeans, method = "wss")
+
+# Use eclust() procedure to do K-Means
+wine.km <- eclust(wine_subset, "kmeans", nboot = 2)
+
+# Print result
+wine.km
+
+# Optimal number of clusters using gap statistics
+wine.km$nbclust
+fviz_nbclust(wine_subset, kmeans, method = "gap_stat")
+
+# Silhouette plot
+fviz_silhouette(wine.km)
+
+fviz_cluster(wine_cluster, data = wine_subset) + 
+  theme_bw() +
+  theme(text = element_text(family="Georgia")) 
+
+fviz_cluster(wine_cluster, data = wine_subset, ellipse.type = "norm") + 
+  theme_bw() +
+  theme(text = element_text(family="Georgia")) 
+```
+
+**3. Hierarchical Clustering**
+
+```{r message=FALSE, warning=FALSE}
+
+## Hierarchical Clustering
+## Dataset: USArrests
+#  install.packages("cluster")
+arrest.hc <- USArrests %>%
+  scale() %>%                    # Scale all variables
+  dist(method = "euclidean") %>% # Euclidean distance for dissimilarity 
+  hclust(method = "ward.D2")     # Compute hierarchical clustering
+
+# Generate dendrogram using factoextra package
+fviz_dend(arrest.hc, k = 4, # Four groups
+          cex = 0.5, 
+          k_colors = c("pink","lightgreen","lightblue", "cyan"),
+          color_labels_by_k = TRUE, # color labels by groups
+          rect = TRUE, # Add rectangle (cluster) around groups,
+          main = "Cluster Dendrogram: USA Arrest data"
+) + theme(text = element_text(family="Georgia")) 
+
+```
+
+#Answer
+
+Principal Component Analysis (PCA) and clustering methods play different roles in data analysis. 
+
+PCA aims to reduce dimensionality by transforming original variables into orthogonal variables known as principal components. 
+
+On the other hand, clustering methods aim to reveal natural groupings within the data by partitioning it into clusters of similar data points using similarity or distance metrics. 
+
+While PCA condenses information, clustering methods help in identifying inherent structures or patterns by grouping data points with common characteristics.
+
+#References
+
+**References**
+
+James, Gareth, Daniela Witten, Trevor Hastie, and Robert Tibshirani. 2013 *An introduction to statistical learning*. Vol. 112. New York: Springer.

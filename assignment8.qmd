@@ -98,13 +98,13 @@ Model 3 is the best as it has the lowest BIC and Cp values. However, Model 7, wi
 ```{R}
 for_subset <- regsubsets(y ~ poly(x, 10, raw = T), data = data.frame(y,x, nvmax = 10), method = "forward")
 
-plot(summary(for_subset)$bic, type = "b", pch = 16, col = "lightblue", 
+plot(summary(for_subset)$bic, type = "b", pch = 16, col = "orange", 
      xlab = "Model Number", ylab = "BIC Value", 
      main = "BIC Values for Different Models")
-plot(summary(for_subset)$cp, type = "b", pch = 16, col = "lightblue", 
+plot(summary(for_subset)$cp, type = "b", pch = 16, col = "pink", 
      xlab = "Model Number", ylab = "Cp Value", 
      main = "Cp Values for Different Models")
-plot(summary(for_subset)$adjr2, type = "b", pch = 16, col = "lightblue", 
+plot(summary(for_subset)$adjr2, type = "b", pch = 16, col = "steelblue", 
      xlab = "Model Number", ylab = "Adjusted R^2 Value", 
      main = "Adjusted R^2 Values for Different Models")
 
@@ -141,6 +141,6 @@ coef(bac_subset, id = 3)
 ```
 
 
-**Answer:**
+# Answer 3:
 
 Model 4, using backwards stepwise selection, outperforms others across all three metrics. The coefficients are as follows: intercept (3.96), B1 (9.89), B2 (1.97), and B3 (0.17).
