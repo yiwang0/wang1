@@ -33,11 +33,11 @@ website:
         text: About
       - href: research.qmd
         text: Research
-      - href: project.qmd
-        text: Project
+      - href: proposal.qmd
+        text: Project Proposal     
       - href: resume.qmd
         text: Résumé
-      - text: "Assignments"
+      - text: Assignments
         menu:  
           - href: assignment1.qmd
             text: Assignment 1
@@ -49,8 +49,14 @@ website:
             text: Lab 1 
           - href: Lab02.qmd
             text: Lab 2 
+          - href: Lab03.qmd
+            text: Lab 3 
           - href: assignment3.qmd
             text: Assignment 3
+          - href: assignment4.qmd
+            text: Assignment 4
+            
+          
 
 format:
   html:
