@@ -1,18 +1,5 @@
----
-title: "Assignment 3"
-author: "Yi Wang"
-output:
-  html_document:
-    toc: yes
-    toc_float: yes
-     highlight: default
-     theme: libera
-     number_sections: yes
-date: last-modified
-title-block-banner:true
 
----
-  
+```{R}
 # Load necessary libraries in a single line
 library(haven) # For reading Stata data files
 library(MASS)  # For ordinal logistic regression
@@ -85,7 +72,7 @@ TEDS_2016[, categorical_columns] <- lapply(TEDS_2016[, categorical_columns], fun
 regplot <- function(x, y, title, xlab = "X", ylab = "Y") {
   fit <- lm(y ~ x)
   plot(x, y, main = paste("Regression Fit Plot", title), xlab = xlab, ylab = ylab, pch = 20)
-  abline(fit, col = "cyan")
+  abline(fit, col = "green")
 }
 
 # Regression plot function usage consolidated
@@ -95,8 +82,16 @@ regplot(TEDS_2016$edu, TEDS_2016$Tondu_numeric, "Education vs. Tondu", xlab = "E
 regplot(TEDS_2016$income, TEDS_2016$Tondu_numeric, "Income vs. Tondu", xlab = "Income Category", ylab = "Tondu Response")
 
 # Ordinal logistic regression and plotting consolidated
-ordinal_regression_model_age <- polr(Tondu_factor ~ age_factor, data = TEDS_2016, Hess=TRUE)
+
 pred_data_age <- data.frame(age_factor = levels(TEDS_2016$age_factor))
-pred_data_age_probs <- predict(ordinal_regression_model_age, newdata = pred_data_age, type = "probs")
-long_data <- pivot_longer(as.data.frame(pred_data_age_probs), cols = -age_factor, names_to = "Tondu_Response", values_to = "Probability")
-ggplot(long_data, aes(x = age_factor, y = Probability, color = Tondu_Response, group = Tondu_Response)) + geom_line() + geom_point() + theme_minimal() + labs(x = "Age Group", y = "Predicted Probability", title = "Predicted Probability of Tondu Responses by Age Group")
+
+```
+
+# Answer
+
+**Problem:**
+The regression plot seems to lack significance, likely because the Tondu variable is divided into 7 categories. 
+
+**Suggestion:**
+Given the categorical nature of the data, linear regression may not be the best fit. Instead, logistic regression could be a more suitable choice.
+

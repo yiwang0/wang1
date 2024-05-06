@@ -7,7 +7,8 @@ toc: false
 title-block-banner: true
 ---
 
-```{R}
+``` {R}
+
 require(ISLR)
 require(MASS)
 require(descr)
@@ -54,11 +55,9 @@ summary(glm.vt)
 plot(glm.vt)
 
 ```
-#Answer
 
-Female voters show a slight tendency to vote less (less likely to vote) for President Tsai, although gender itself (aka. whether a voter is a female or not) is not statistically significant predictor.  
+# Answer
+
+Female voters show a slight tendency to vote less (less likely to vote) for President Tsai, although gender itself (aka. whether a voter is a female or not) is not statistically significant predictor.
 
 The best predictors of whether a voter will for President Tsai are: party affiliations (KMT, DPP), stances on independence, and family background factors such as having a Mainland father or being Taiwanese.
-
-
-

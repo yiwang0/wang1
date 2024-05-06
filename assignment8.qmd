@@ -74,13 +74,13 @@ bic <- summary(best_subset)$bic
 cp <- summary(best_subset)$cp
 adjr2 <- summary(best_subset)$adjr2
 
-plot(bic, type = "b", pch = 16, col = "blue", 
+plot(bic, type = "b", pch = 16, col = "cyan", 
      xlab = "Model Number", ylab = "BIC Value", 
      main = "BIC Values for Different Models")
-plot(cp, type = "b", pch = 16, col = "blue", 
+plot(cp, type = "b", pch = 16, col = "cyan", 
      xlab = "Model Number", ylab = "Cp Value", 
      main = "Cp Values for Different Models")
-plot(adjr2, type = "b", pch = 16, col = "blue", 
+plot(adjr2, type = "b", pch = 16, col = "cyan", 
      xlab = "Model Number", ylab = "Adjusted R^2 Value", 
      main = "Adjusted R^2 Values for Different Models")
 

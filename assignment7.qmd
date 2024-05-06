@@ -56,23 +56,19 @@ mean(glm.pred==Direction.2005)
 
 ```
 
-# Answer: 
+# Answer:
 
 **Result Interpretation**
 
-2a: In LDA, predictor variables are assumed to be normally distributed with equal variance, and the response variable must be categorical, as LDA is tailored for classification tasks.
+**2 a.** In LDA, predictor variables are assumed to be normally distributed with equal variance, and the response variable must be categorical, as LDA is tailored for classification tasks.
 
-2b: LDA is suitable for multiclass classification, while logistic regression is typically used for binary classification. Additionally, LDA imposes distributional assumptions on the data, unlike logistic regression.
+**2 b.** LDA is suitable for multiclass classification, while logistic regression is typically used for binary classification. Additionally, LDA imposes distributional assumptions on the data, unlike logistic regression.
 
-2c: The Receiver Operating Characteristic (ROC) curve assesses the performance of a classifier model.
+**2 c.** The Receiver Operating Characteristic (ROC) curve assesses the performance of a classifier model.
 
-2d: Sensitivity measures the true positive rate, while specificity measures the true negative rate. Sensitivity is often prioritized due to the severe consequences of false positives, such as wrongful convictions. Both type I and II errors are undesirable, but high sensitivity is crucial.
+**2 d.** Sensitivity measures the true positive rate, while specificity measures the true negative rate. Sensitivity is often prioritized due to the severe consequences of false positives, such as wrongful convictions. Both type I and II errors are undesirable, but high sensitivity is crucial.
 
-2e: Based on the chart, sensitivity is deemed more critical for prediction.
+**2 e.** Based on the chart, sensitivity is deemed more critical for prediction.
 
-3:
-
-```{R}
-prediction_error <- (252+23)/10000
-cat("Prediction error:", formatC(prediction_error * 100, format = "f", digits = 2), "%\n")
-```
+**3.Calculate the prediction error:**
+prediction_error <- (252+23)/10000 = 0.0275 = **2.75%**
