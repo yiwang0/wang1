@@ -70,5 +70,4 @@ mean(glm.pred==Direction.2005)
 
 **2 e.** Based on the chart, sensitivity is deemed more critical for prediction.
 
-**3.Calculate the prediction error:**
-prediction_error <- (252+23)/10000 = 0.0275 = **2.75%**
+**3.Calculate the prediction error:** prediction_error \<- (252+23)/10000 = 0.0275 = **2.75%**
