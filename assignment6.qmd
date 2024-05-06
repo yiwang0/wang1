@@ -1,27 +1,64 @@
 ---
-title: "assignment6"
-author: "Stefanie Wang"
+title: "Assignment6"
+author: "Yi Wang"
 format: html
 editor: visual
+toc: false
+title-block-banner: true
 ---
 
-## Quarto
+```{R}
+require(ISLR)
+require(MASS)
+require(descr)
+attach(Smarket)
 
-Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
+## Linear Discriminant Analysis
+freq(Direction)
+train = Year<2005
+lda.fit=lda(Direction~Lag1+Lag2,data=Smarket, subset=Year<2005)
+lda.fit
+plot(lda.fit, col="coral")
+Smarket.2005=subset(Smarket,Year==2005) # Creating subset with 2005 data for prediction
+lda.pred=predict(lda.fit,Smarket.2005)
+names(lda.pred)
+lda.class=lda.pred$class
+Direction.2005=Smarket$Direction[!train] 
+table(lda.class,Direction.2005) 
+data.frame(lda.pred)[1:5,]
+table(lda.pred$class,Smarket.2005$Direction)
+mean(lda.pred$class==Smarket.2005$Direction)
 
-## Running Code
+library(haven)
+TEDS_2016 <- read_stata("https://github.com/datageneration/home/blob/master/DataProgramming/data/TEDS_2016.dta?raw=true")
 
-When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
+glm.vt <- glm(votetsai~female, data = TEDS_2016, family = binomial)
 
-```{r}
-1 + 1
+summary(glm.vt)
+plot(glm.vt)
+
+library(ggplot2)
+ggplot(TEDS_2016, aes(x = female, y = votetsai)) +
+  geom_bar(stat = "identity", fill = "skyblue") +
+  labs(title = "Females Voting for Tsai", x = "Sex", y = "Votes")
+
+glm.vt <- glm(votetsai~female + KMT + DPP + age + edu + income, data = TEDS_2016, family = binomial)
+
+summary(glm.vt)
+plot(glm.vt)
+
+
+glm.vt <- glm(votetsai~female + KMT + DPP + age + edu + income + Independence + Econ_worse + Govt_dont_care + Minnan_father + Mainland_father + Taiwanese, data = TEDS_2016, family = binomial)
+
+summary(glm.vt)
+plot(glm.vt)
+
 ```
+#Answer
 
-You can add options to executable code like this
+Female voters show a slight tendency to vote less (less likely to vote) for President Tsai, although gender itself (aka. whether a voter is a female or not) is not statistically significant predictor.  
 
-```{r}
-#| echo: false
-2 * 2
-```
+The best predictors of whether a voter will for President Tsai are: party affiliations (KMT, DPP), stances on independence, and family background factors such as having a Mainland father or being Taiwanese.
 
-The `echo: false` option disables the printing of code (only output is displayed).
+
+
