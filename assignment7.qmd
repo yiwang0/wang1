@@ -1,5 +1,5 @@
 ---
-title: "Assignment7"
+title: "Assignment 7"
 author: "Yi Wang"
 format: html
 editor: visual

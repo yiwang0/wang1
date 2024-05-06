@@ -4,6 +4,25 @@ title: "About"
 
 About this site
 
-```{r}
-1 + 1
-```
+<style>
+  body {background: linear-gradient(to bottom, #005555, #550055, #005555);
+    color: Turquoise; /* Change text color to contrast with background */
+  }
+</style>
+
+
+
+<span style="color:Aqua; font-size:24px;"> **Stefaniverse!** is Stefanie's Universe where she posts cool and not-so-cool things!</span>
+
+ 
+
+![](2.jpg)
+
+![](3.jpg)
+![](4.jpg)
+![](5.jpg)
+
+![](7.jpg)
+![](8.jpg)
+![](6.jpg)
+

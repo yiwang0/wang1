@@ -1,5 +1,5 @@
 ---
-title: "Assignment6"
+title: "Assignment 6"
 author: "Yi Wang"
 format: html
 editor: visual
@@ -7,7 +7,7 @@ toc: false
 title-block-banner: true
 ---
 
-``` {R}
+```{R}
 
 require(ISLR)
 require(MASS)

@@ -1,3 +1,16 @@
+---
+title: "Assignment 3"
+author: "Yi Wang"
+output: 
+  html_document: 
+    toc: yes
+    toc_float: yes
+    highlight: default
+    theme: libera
+    number_sections: yes
+ 
+title-block-banner: true
+---
 
 ```{R}
 # Load necessary libraries in a single line

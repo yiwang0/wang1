@@ -1,7 +1,14 @@
 ---
-title: "Welcome To Stefaniverse! :)"
+title: "Welcome To Stefaniverse! :D"
 ---
 
-```{r}
-1 + 1
-```
+<center>
+# Hello World!
+</center>
+
+<center>
+# You Landed On Stefanie's Universe :D
+</center>
+
+![](1.jpg)
+
